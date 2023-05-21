@@ -11,7 +11,7 @@ import { Card, Timeline } from 'flowbite-react';
 function App() {
 
   const [socketUrl] = useState("ws://localhost:8080");
-  const [messageHistory, setMessageHistory] = useState<Queue<Message>>(new Queue<Message>(2));
+  const [messageHistory, setMessageHistory] = useState<Queue<Message>>(new Queue<Message>(10));
   const [numMessages, setNumMessages] = useState(messageHistory.size());
 
   const { lastJsonMessage, readyState } = useWebSocket(socketUrl);
@@ -19,8 +19,6 @@ function App() {
   useEffect(() => {
     if (lastJsonMessage !== null) {
       messageHistory.enqueue(lastJsonMessage);
-      //setMessageHistory());
-      //      setMessageHistory((prev) => prev.concat(lastJsonMessage));
     }
 
   }, [lastJsonMessage, setMessageHistory]);
